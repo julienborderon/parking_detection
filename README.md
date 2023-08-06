@@ -38,10 +38,10 @@ You can download the model on Hugging Face : https://huggingface.co/julien13/par
 ## results
 Examples :
 
-<img src="images/Merignac148.jpg_mask_0.png" alt="example 1 mask" width="450"/>   <img src="images/Merignac148.jpg_result_0.png" alt="example 1 result" width="450"/>
+<img src="images/Merignac148.jpg_mask_0.png" alt="example 1 mask" width="400"/>   <img src="images/Merignac148.jpg_result_0.png" alt="example 1 result" width="400"/>
 
 
-<img src="images/Merignac148.jpg_mask_1.png" alt="example 2 mask" width="450"/>  <img src="images/Merignac148.jpg_result_1.png" alt="example 2 result" width="450"/>
+<img src="images/Merignac148.jpg_mask_1.png" alt="example 2 mask" width="400"/>  <img src="images/Merignac148.jpg_result_1.png" alt="example 2 result" width="400"/>
 
 
 
