@@ -21,9 +21,9 @@ Detecting parking spaces in aerial images is a burgeoning research area with pot
 
 ## training 
 We decided to train YOLO V8 small on aerial images of parking that we obtained by crossing the openstreetmap database and the IGN TOPO database ( https://geoservices.ign.fr/documentation/donnees/vector/bdtopo). 
-We used data from 3 departments : Bouches-du-Rhône, Var and Alpes-de-Haute-Provence.
+We used data from 6 departments : Ain, Alpes-de-Haute-Provence, Bouches-du-Rhône, Gard, Lot and Var.
 
-We have a dataset composed of 829 images with 2384 parking for the train set, 179 images and 518 parking for the validation set and finally 177 images and 515 parking for the test set.
+We have a dataset composed of 2510 images with 7242 parking for the train set, 539 images and 1651 parking for the validation set and finally 537 images and 1573 parking for the test set.
 
 With 200 epochs we obtaint the next results : 
 <img src="images/confusion_matrix.png" alt="confusion matrix" height="600" />
