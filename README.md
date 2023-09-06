@@ -1,5 +1,5 @@
 # parking detection
-Parking Detection from Aerial Images (V1)
+Parking Detection from Aerial Images 
 
 We developed an algorithm for parking detection in aerial images combining the YOLO V8 (https://docs.ultralytics.com/) model with Meta's SAM (https://segment-anything.com/) algorithm enables accurate and efficient parking detection in complex aerial scenes.
 
