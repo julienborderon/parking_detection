@@ -27,7 +27,7 @@ We have a dataset composed of 2510 images with 7242 parking for the train set, 5
 
 With 300 epochs we obtaint the next results : 
 <img src="images/confusion_matrix_v2.png" alt="confusion matrix" height="600" />
-<img src="images/results.png" alt="results" />
+<img src="images/results_v2.png" alt="results" />
 
 
 ## download the model 
