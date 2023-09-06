@@ -25,7 +25,7 @@ We used data from 6 departments : Ain, Alpes-de-Haute-Provence, Bouches-du-Rhôn
 
 We have a dataset composed of 2510 images with 7242 parking for the train set, 539 images and 1651 parking for the validation set and finally 537 images and 1573 parking for the test set.
 
-With 200 epochs we obtaint the next results : 
+With 300 epochs we obtaint the next results : 
 <img src="images/confusion_matrix_v2.png" alt="confusion matrix" height="600" />
 <img src="images/results.png" alt="results" />
 
