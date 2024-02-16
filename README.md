@@ -1,5 +1,18 @@
-# parking detection
-Parking Detection from Aerial Images 
+# Detecting Aerial Parking Lots for Sustainable and Smart Urban Planning
+
+## A Brief History of AI-Based Object Detection from Aerial Images:
+
+The ability to automatically detect objects in aerial images has evolved significantly over the years. Early approaches in the 1990s relied on feature-based methods, such as the Viola-Jones cascade detector using Haar-like features. These methods were effective for simple objects but struggled with complex scenes.
+
+The advent of deep learning in the early 2010s revolutionized object detection. Pioneering models like YOLO introduced real-time, end-to-end approaches, achieving high accuracy and paving the way for further advancements. Today, sophisticated models like YOLOv8 and Meta's SAM leverage deep learning's power to deliver precise and efficient object detection in complex aerial images.
+
+
+
+## The Challenge:
+
+Growing urbanization puts pressure on parking, creating congestion and environmental issues. The ENR law requires the installation of photovoltaic canopies on aerial parking lots, but its effective enforcement requires accurate and reliable identification of these infrastructures.
+
+## The Innovation:
 
 We developed an algorithm for parking detection in aerial images combining the YOLO V8 (https://docs.ultralytics.com/) model with Meta's SAM (https://segment-anything.com/) algorithm enables accurate and efficient parking detection in complex aerial scenes.
 
@@ -19,7 +32,7 @@ Detecting parking spaces in aerial images is a burgeoning research area with pot
 
 5. **Vehicle Diversity**: Parked vehicles vary in shape, size, and orientation, adding complexity.
 
-## training 
+## Training and results
 We decided to train YOLO V8 on aerial images of parking (with an area > 1500m²) that we obtained by crossing the openstreetmap database and the IGN TOPO database ( https://geoservices.ign.fr/documentation/donnees/vector/bdtopo). 
 We used data from 6 departments : Ain, Alpes-de-Haute-Provence, Bouches-du-Rhône, Dordogne, Hérault, Gard, Gironde, Lot and Var.
 
@@ -34,18 +47,19 @@ We have to keep in mind that our model detects parkings that are considered here
 
 
 
-## download the model 
+## Download the model 
 
 You can download the model on Hugging Face : https://huggingface.co/julien13/parking_detection/tree/main
 
 
-## results
-Examples :
+## Examples :
 
-<img src="images/Merignac148.jpg_mask_0.png" alt="example 1 mask" width="400"/>   <img src="images/Merignac148.jpg_result_0.png" alt="example 1 result" width="400"/>
+<img src="images/Merignac148.jpg_mask_0.png" alt="example 1 mask" width="400"/>   
+<img src="images/Merignac148.jpg_result_0.png" alt="example 1 result" width="400"/>
 
 
-<img src="images/Merignac148.jpg_mask_1.png" alt="example 2 mask" width="400"/>  <img src="images/Merignac148.jpg_result_1.png" alt="example 2 result" width="400"/>
+<img src="images/Merignac148.jpg_mask_1.png" alt="example 2 mask" width="400"/>  
+<img src="images/Merignac148.jpg_result_1.png" alt="example 2 result" width="400"/>
 
 
 
