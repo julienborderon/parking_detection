@@ -6,8 +6,6 @@ The ability to automatically detect objects in aerial images has evolved signifi
 
 The advent of deep learning in the early 2010s revolutionized object detection. Pioneering models like YOLO introduced real-time, end-to-end approaches, achieving high accuracy and paving the way for further advancements. Today, sophisticated models like YOLOv8 and Meta's SAM leverage deep learning's power to deliver precise and efficient object detection in complex aerial images.
 
-
-
 ## The Challenge:
 
 Growing urbanization puts pressure on parking, creating congestion and environmental issues. The ENR law requires the installation of photovoltaic canopies on aerial parking lots, but its effective enforcement requires accurate and reliable identification of these infrastructures.
@@ -39,8 +37,7 @@ We used data from 6 departments : Ain, Alpes-de-Haute-Provence, Bouches-du-Rhôn
 We have a dataset composed of 3743 images with 5844 parking for the train set, 562 images and 1114 parking for the validation set and finally 561 images and 1178 parking for the test set.
 
 After several tests on different YOLOv8 size (small, medium and large) we obtain the best result with 200 epochs on the medium size model. On the test dataset we then have the next matrix :  
-<img src="images/confusion_matrix_normalized.png" alt="confusion matrix" width="500" />
-<img src="images/confusion_matrix.png" alt="confusion matrix" width="500" />
+<img src="images/confusion_matrix_normalized.png" alt="confusion matrix" width="500" /> <img src="images/confusion_matrix.png" alt="confusion matrix" width="500" />
 
 
 We have to keep in mind that our model detects parkings that are considered here as background (76) because they don't have any label because of our area limit.
@@ -54,12 +51,10 @@ You can download the model on Hugging Face : https://huggingface.co/julien13/par
 
 ## Examples :
 
-<img src="images/Merignac148.jpg_mask_0.png" alt="example 1 mask" width="400"/>   
-<img src="images/Merignac148.jpg_result_0.png" alt="example 1 result" width="400"/>
+<img src="images/Merignac148.jpg_mask_0.png" alt="example 1 mask" width="400"/> <img src="images/Merignac148.jpg_result_0.png" alt="example 1 result" width="400"/>
 
 
-<img src="images/Merignac148.jpg_mask_1.png" alt="example 2 mask" width="400"/>  
-<img src="images/Merignac148.jpg_result_1.png" alt="example 2 result" width="400"/>
+<img src="images/Merignac148.jpg_mask_1.png" alt="example 2 mask" width="400"/>  <img src="images/Merignac148.jpg_result_1.png" alt="example 2 result" width="400"/>
 
 
 
