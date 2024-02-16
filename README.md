@@ -20,15 +20,18 @@ Detecting parking spaces in aerial images is a burgeoning research area with pot
 5. **Vehicle Diversity**: Parked vehicles vary in shape, size, and orientation, adding complexity.
 
 ## training 
-We decided to train YOLO V8 on aerial images of parking that we obtained by crossing the openstreetmap database and the IGN TOPO database ( https://geoservices.ign.fr/documentation/donnees/vector/bdtopo). 
+We decided to train YOLO V8 on aerial images of parking (with an area > 1500m²) that we obtained by crossing the openstreetmap database and the IGN TOPO database ( https://geoservices.ign.fr/documentation/donnees/vector/bdtopo). 
 We used data from 6 departments : Ain, Alpes-de-Haute-Provence, Bouches-du-Rhône, Dordogne, Hérault, Gard, Gironde, Lot and Var.
 
 We have a dataset composed of 3743 images with 5844 parking for the train set, 562 images and 1114 parking for the validation set and finally 561 images and 1178 parking for the test set.
 
-After several tests on different YOLOv8 size (small, medium and large) we obtain the best result with 200 epochs on the medium size model. On the test dataset we then have :  
+After several tests on different YOLOv8 size (small, medium and large) we obtain the best result with 200 epochs on the medium size model. On the test dataset we then have the next matrix :  
 <img src="images/confusion_matrix_normalized.png" alt="confusion matrix" height="400" />
+<img src="images/confusion_matrix.png" alt="confusion matrix" height="400" />
 
-<img src="images/results.png" alt="results" />
+
+We have to keep in mind that our model detects parkings that are considered here as background (76) because they don't have any label because of our area limit.
+
 
 
 ## download the model 
