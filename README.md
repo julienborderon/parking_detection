@@ -26,7 +26,8 @@ We used data from 6 departments : Ain, Alpes-de-Haute-Provence, Bouches-du-Rhôn
 We have a dataset composed of 3743 images with 5844 parking for the train set, 562 images and 1114 parking for the validation set and finally 561 images and 1178 parking for the test set.
 
 After several tests on different YOLOv8 size (small, medium and large) we obtain the best result with 200 epochs on the medium size model. On the test dataset we then have :  
-<img src="images/confusion_matrix_normalized.png" alt="confusion matrix" height="600" />
+<img src="images/confusion_matrix_normalized.png" alt="confusion matrix" height="400" />
+
 <img src="images/results.png" alt="results" />
 
 
