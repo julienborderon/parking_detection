@@ -7,21 +7,33 @@ import geopandas as gp
 from owslib.wms import WebMapService
 import osmnx as ox
 from unidecode import unidecode
+from io import BytesIO
+
+def get_image(bb, size, crs, img_type):
+    bbox_str = ",".join(map(str, bb))
+    base_url = 'https://wxs.ign.fr/ortho/geoportail/r/wms'
+    url = (f"{base_url}?SERVICE=WMS&REQUEST=GetMap&LAYERS=ORTHOIMAGERY.ORTHOPHOTOS"
+           f"&STYLES=normal&CRS={crs}&BBOX={bbox_str}&WIDTH={size}&HEIGHT={size}&FORMAT={img_type}&TRANSPARENT=TRUE")
+
+    response = requests.get(url)
+
+    # Vérifier le statut de la réponse
+    if response.status_code == 200:
+        if img_type == 'image/jpeg':
+            img = Image.open(BytesIO(response.content))
+            return img
+        elif img_type == 'image/geotiff':
+            with MemoryFile(response.content) as memfile:
+                with memfile.open() as dataset:
+                    img_data = dataset.read()
+                    img_transform = dataset.transform
+                    img_crs = dataset.crs
+            return img_data, img_transform, img_crs
+    else:
+        print(f"Erreur lors de la récupération de l'image : {response.status_code}")
 
 
-def get_image(bb, size):
-    wms = WebMapService('https://wxs.ign.fr/essentiels/geoportail/r/wms?SERVICE=WMS&REQUEST=GetCapabilities')
-    img = wms.getmap(layers=['ORTHOIMAGERY.ORTHOPHOTOS'],
-                     styles=['normal'],
-                     srs='EPSG:2154',
-                     bbox=bb,
-                     size=(size, size),
-                     format='image/jpeg',
-                     transparent=True
-                     )
-    img = Image.open(img)
-    return (img)
-
+# Fonction pour obtenir la surface d'une bounding box
 
 def get_area(x_min, y_min, x_max, y_max):
     p1 = Point(x_min, y_max)
@@ -36,16 +48,38 @@ def get_area(x_min, y_min, x_max, y_max):
     return df.area[0] / 1E6
 
 
-def get_orthophotos(zone, size):
-    geometry = ox.geocode_to_gdf(zone).geometry
+# Fonction pour convertir une bounding box d'un CRS à un autre
+
+def bbox_to_new_crs(bbox):
+    # Créer un transformateur de CRS (EPSG:2154 à EPSG:4326)
+    transformer = Transformer.from_crs("EPSG:2154", "EPSG:4326", always_xy=False)
+
+    # Convertir les coins de la bounding box
+    x_min, y_min = transformer.transform(bbox[0], bbox[1])
+    x_max, y_max = transformer.transform(bbox[2], bbox[3])
+
+    new_bbox = (x_min, y_min, x_max, y_max)
+
+    return new_bbox
+
+
+# Fonction principale pour obtenir les orthophotos
+
+def get_orthophotos(size, result_dir, specific_zone=None, zone=None, df_specific=None):
+    if specific_zone:
+        geometry = ox.geocode_to_gdf(zone).geometry
+    else:
+        geometry = df_specific.geometry
+        zone = "zone"
+
     bounding_boxes = []
 
     x_min, y_min, x_max, y_max = geometry.to_crs("2154").bounds.iloc[0]
     surface = get_area(x_min, y_min, x_max, y_max)
     width, height = (x_max - x_min), (y_max - y_min)
 
-    print("the area of {} is {} km²".format(zone, surface))
-    print("we are about to download {} images of the zone".format(int(height / size) * int(width / size)))
+    print("la surface de la ville de {} est de {} km²".format(zone, surface))
+    print("on va télécharger {} orthos".format(int(height / size) * int(width / size)))
 
     for i in range(0, int(height / size)):
         for j in range(0, int(width / size)):
@@ -53,14 +87,17 @@ def get_orthophotos(zone, size):
             x2, y2 = x_min + (j + 1) * size, y_min + (i + 1) * size
             bounding_boxes.append((x1, y1, x2, y2))
 
-    orthophotos = []
     for bb in bounding_boxes:
-        orthophoto = get_image(bb, 1000)
-        orthophoto.save(
-            r'C:\Users\j.borderon\Documents\GitHub\data-ia\10-parkings\notebooks\Orthophotos\{}{}.jpg'.format(
-                unidecode(zone), bounding_boxes.index(bb)))
+        orthophoto_jpg = get_image(bb, 1000, 'EPSG:2154', 'image/jpeg')
+        orthophoto_jpg.save(result_dir + '\{}_{}_jpg.jpg'.format(unidecode(zone), bounding_boxes.index(bb)))
+        orthophoto_geo, img_transform, img_crs = get_image(bbox_to_new_crs(bb), 1000, 'EPSG:4326', 'image/geotiff')
+        with rasterio.open(result_dir + '\{}_{}_tif.tif'.format(unidecode(zone), bounding_boxes.index(bb)), 'w',
+                           driver='GTiff', height=orthophoto_geo.shape[1], width=orthophoto_geo.shape[2],
+                           count=orthophoto_geo.shape[0], dtype=orthophoto_geo.dtype, crs=img_crs,
+                           transform=img_transform) as dst:
+            dst.write(orthophoto_geo)
 
-    return orthophotos
+    return
 
 if __name__ == "__main__":
     zone = "Périgueux"
