@@ -88,15 +88,18 @@ def get_orthophotos(size, result_dir, specific_zone=None, zone=None, df_specific
             bounding_boxes.append((x1, y1, x2, y2))
 
     for bb in bounding_boxes:
+        jpg_file_path = result_dir + '\{}_{}_jpg.jpg'.format(unidecode(zone), bounding_boxes.index(bb))
+        geotiff_file_path = result_dir + '\{}_{}_tif.tif'.format(unidecode(zone), bounding_boxes.index(bb))
+        if os.path.exists(jpg_file_path):
+            continue
         orthophoto_jpg = get_image(bb, 1000, 'EPSG:2154', 'image/jpeg')
-        orthophoto_jpg.save(result_dir + '\{}_{}_jpg.jpg'.format(unidecode(zone), bounding_boxes.index(bb)))
+        orthophoto_jpg.save(jpg_file_path)
         orthophoto_geo, img_transform, img_crs = get_image(bbox_to_new_crs(bb), 1000, 'EPSG:4326', 'image/geotiff')
-        with rasterio.open(result_dir + '\{}_{}_tif.tif'.format(unidecode(zone), bounding_boxes.index(bb)), 'w',
-                           driver='GTiff', height=orthophoto_geo.shape[1], width=orthophoto_geo.shape[2],
+        with rasterio.open(geotiff_file_path, 'w', driver='GTiff', height=orthophoto_geo.shape[1],
+                           width=orthophoto_geo.shape[2],
                            count=orthophoto_geo.shape[0], dtype=orthophoto_geo.dtype, crs=img_crs,
                            transform=img_transform) as dst:
             dst.write(orthophoto_geo)
-
     return
 
 if __name__ == "__main__":
